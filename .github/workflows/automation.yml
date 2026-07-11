@@ -1,19 +1,30 @@
 name: Automation
 
 on:
-  workflow_dispatch: # permite rodar manualmente
-  schedule:
-    - cron: "0 0 * * *" # opcional, roda diariamente
+  workflow_dispatch: # só roda quando você mandar manualmente
+  # se quiser agendamento automático, adicione:
+  # schedule:
+  #   - cron: "0 0 * * *" # exemplo: roda todo dia à meia-noite
 
 jobs:
   automation:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
 
-      - name: Run script
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # versão atualizada, sem warning de Node.js
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24  # usa Node.js 24, compatível com runners atuais
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run automation script
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-        run: |
-          node script.js
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }} # seu PAT como variável de ambiente
+          PRS_PER_RUN: 5                          # padrão: 5 PRs por execução
+          DELAY_MS: 1000                          # padrão: 1 segundo entre PRs
+        run: node script.js
