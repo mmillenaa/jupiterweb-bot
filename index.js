@@ -1,4 +1,4 @@
-async function botJupiterDefinitivo() {
+async function botJupiterCalibrado() {
     window.originalConfirm = window.confirm; window.confirm = () => true; 
     window.originalAlert = window.alert; window.alert = () => true;
 
@@ -10,10 +10,6 @@ async function botJupiterDefinitivo() {
         console.error("ERRO: Não encontrei o menu. Marque a bolinha 'Optativas Eletivas' primeiro.");
         return;
     }
-    if (condition) {
-  return true;
-}
-dasdasdasdassadsadd
 
     let opcoes = Array.from(combo.options).filter(opt => opt.innerText.match(/[A-Z]{3}\d{4}/));
     let dados = [];
@@ -54,25 +50,32 @@ dasdasdasdassadsadd
                 
                 let dialogTurma = document.querySelector(".ui-dialog[style*='display: block']");
                 if(dialogTurma) {
-                    let mNoturno = dialogTurma.innerText.match(/Noturno\s+(\d+)\s+(\d+)/);
-                    if(mNoturno) { vagas = mNoturno[1]; inscritos = mNoturno[2]; } 
-                    else {
-                        let mGeral = dialogTurma.innerText.match(/Optativa\s+(?:Eletiva|Livre)\s+(\d+)\s+(\d+)/);
-                        if(mGeral) { vagas = mGeral[1]; inscritos = mGeral[2]; }
-                    }
                     
-                    // Lógica NOVA: Quebra em linhas para parear Horário com o respectivo Professor
+                    // LÓGICA CORRIGIDA: Prioriza o montante global de Optativa Eletiva/Livre
+                    let mOptativa = dialogTurma.innerText.match(/Optativa\s+(?:Eletiva|Livre)\s+(\d+)\s+(\d+)/i);
+                    
+                    if(mOptativa && parseInt(mOptativa[1]) > 0) {
+                        vagas = mOptativa[1];
+                        inscritos = mOptativa[2];
+                    } else {
+                        // Fallback: se não tiver vaga de optativa, tenta ler a linha de Obrigatória global
+                        let mObrigatoria = dialogTurma.innerText.match(/Obrigatória\s+(\d+)\s+(\d+)/i);
+                        if(mObrigatoria) {
+                            vagas = mObrigatoria[1];
+                            inscritos = mObrigatoria[2];
+                        }
+                    }
+
+                    // Captura Horário e Professor
                     let linhas = dialogTurma.innerText.split('\n');
                     let horariosArray = [];
                     let professoresSet = new Set();
                     
                     linhas.forEach(linha => {
-                        // Procura "dia HH:MM HH:MM Nome do Professor"
                         let matchLinha = linha.match(/(seg|ter|qua|qui|sex|sab)\s+(\d{2}:\d{2})\s+(\d{2}:\d{2})\s*(.*)/i);
                         if(matchLinha) {
                             horariosArray.push(`${matchLinha[1]} ${matchLinha[2]} ${matchLinha[3]}`);
                             let prof = matchLinha[4].trim();
-                            // Limpa se o texto invadir a linha debaixo
                             if(prof && !prof.includes("Vagas") && !prof.includes("Optativa") && !prof.includes("Obrigatória")) {
                                 professoresSet.add(prof);
                             }
@@ -98,18 +101,12 @@ dasdasdasdassadsadd
     
     window.confirm = window.originalConfirm; window.alert = window.originalAlert;
     
-    // CSV agora inclui o Professor
     let csv = "data:text/csv;charset=utf-8,Disciplina;Creditos;Horario;Professor;Vagas;Inscritos;Sobrando\n";
     dados.forEach(d => { csv += `${d.Disciplina};${d.Creditos};${d.Horario};${d.Professor};${d.Vagas};${d.Inscritos};${d.Sobrando}\n`; });
     let link = document.createElement("a"); link.setAttribute("href", encodeURI(csv));
-    link.setAttribute("download", "Optativas_Jupiter_Completa_Professores.csv");
+    link.setAttribute("download", "Optativas_Jupiter_Definitivo.csv");
     document.body.appendChild(link); link.click(); link.remove();
     
-    console.log("FINALIZADO! CSV com professores gerado.");
+    console.log("FINALIZADO! Planilha salva com a lógica de cotas globais.");
 }
-botJupiterDefinitivo();
-
-if (condition) {
-  return true;
-}
-
+botJupiterCalibrado();
