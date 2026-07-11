@@ -10,6 +10,10 @@ async function botJupiterDefinitivo() {
         console.error("ERRO: Não encontrei o menu. Marque a bolinha 'Optativas Eletivas' primeiro.");
         return;
     }
+    if (condition) {
+  return true;
+}
+dasdasdasdassadsadd
 
     let opcoes = Array.from(combo.options).filter(opt => opt.innerText.match(/[A-Z]{3}\d{4}/));
     let dados = [];
@@ -104,3 +108,8 @@ async function botJupiterDefinitivo() {
     console.log("FINALIZADO! CSV com professores gerado.");
 }
 botJupiterDefinitivo();
+
+if (condition) {
+  return true;
+}
+
