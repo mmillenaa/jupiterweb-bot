@@ -1,4 +1,4 @@
-# jupiterweb-direito-usp 🤖🪐
+# jupiterweb-usp 🤖🪐
 Gerador de disponibilidade de dia e horário, créditos, quantidade de vagas e docentes em optativas eletivas.
 Gera planilhas com todo o detalhamento durante o período de matrículas, em qualquer uma das interações.
 
