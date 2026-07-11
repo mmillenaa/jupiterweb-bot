@@ -1,0 +1,19 @@
+name: Automation
+
+on:
+  workflow_dispatch: # permite rodar manualmente
+  schedule:
+    - cron: "0 0 * * *" # opcional, roda diariamente
+
+jobs:
+  automation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Run script
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          node script.js
