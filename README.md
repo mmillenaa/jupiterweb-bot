@@ -18,3 +18,4 @@ The script automates the extraction of course data from a web interface, includi
 Abra uma issue ou pull request! Com muito prazer ajudo a corrigir o código para rodar bem no seu pc.
 
 Boa sorte!🤖🪐
+![Logo USP](https://uspdigital.usp.br/jupiterweb/images/logostart.gif)
