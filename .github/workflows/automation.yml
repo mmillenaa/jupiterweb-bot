@@ -2,7 +2,7 @@ name: Automation
 
 on:
   workflow_dispatch: # só roda quando você mandar manualmente
-  # se quiser agendamento automático, adicione:
+  # se quiser rodar automaticamente, adicione:
   # schedule:
   #   - cron: "0 0 * * *" # exemplo: roda todo dia à meia-noite
 
@@ -25,6 +25,6 @@ jobs:
       - name: Run automation script
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }} # seu PAT como variável de ambiente
-          PRS_PER_RUN: 5                          # padrão: 5 PRs por execução
-          DELAY_MS: 1000                          # padrão: 1 segundo entre PRs
+          PRS_PER_RUN: 2                          # quantos PRs por execução
+          DELAY_MS: 1000                          # intervalo entre PRs (ms)
         run: node script.js
