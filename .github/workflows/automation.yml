@@ -1,30 +1,25 @@
-name: Automation
+name: Pair Extraordinaire
 
 on:
-  workflow_dispatch: # só roda quando você mandar manualmente
-  # se quiser rodar automaticamente, adicione:
-  # schedule:
-  #   - cron: "0 0 * * *" # exemplo: roda todo dia à meia-noite
+  issues:
+    types: [opened]
 
 jobs:
-  automation:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4  # versão atualizada, sem warning de Node.js
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24  # usa Node.js 24, compatível com runners atuais
+      - name: Configurar Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run automation script
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }} # seu PAT como variável de ambiente
-          PRS_PER_RUN: 2                          # quantos PRs por execução
-          DELAY_MS: 1000                          # intervalo entre PRs (ms)
-        run: node script.js
+      - name: Commit co-autoria
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.MY_TOKEN }}@github.com/owner/repo.git
+          # aqui entraria o script que adiciona o nome ao Extraordinaire.md
+          git add Extraordinaire.md
+          git commit -m "Add co-author"
+          git push origin HEAD:main
