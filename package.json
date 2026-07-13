@@ -1,0 +1,12 @@
+{
+  "name": "jupiterweb-bot",
+  "version": "1.0.0",
+  "description": "Bot para automação de PRs",
+  "main": "script.js",
+  "scripts": {
+    "start": "node script.js"
+  },
+  "dependencies": {
+    "@octokit/rest": "^20.0.0"
+  }
+}
