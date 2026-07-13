@@ -1,0 +1,25 @@
+name: Pair Extraordinaire
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Configurar Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Commit co-autoria
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.MY_TOKEN }}@github.com/owner/repo.git
+          # aqui entraria o script que adiciona o nome ao Extraordinaire.md
+          git add Extraordinaire.md
+          git commit -m "Add co-author"
+          git push origin HEAD:main
