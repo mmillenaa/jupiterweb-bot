@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this script or its generated datasets, please cite it as below."
+type: software
+title: "jupiterweb-bot: Extrator de dados de disciplinas optativas do JupiterWeb USP"
+abstract: >-
+  A JavaScript automation script designed to extract course data from the USP JupiterWeb 
+  enrollment system. Executed directly in the browser console, it compiles details such 
+  as schedules, credits, professors, and available vacancies for elective courses into 
+  a structured CSV dataset.
+authors:
+  - family-names: "Franco"
+    given-names: "Millena Miranda"
+    affiliation: "Universidade de São Paulo (USP)"
+repository-code: "https://github.com/mmillenaa/jupiterweb-bot"
+license: MIT
+version: 1.0.0
+date-released: "2026-10-09"
+keywords:
+  - web scraping
+  - automation
+  - javascript
+  - universidade de são paulo
+  - jupiterweb
+  - student tools
